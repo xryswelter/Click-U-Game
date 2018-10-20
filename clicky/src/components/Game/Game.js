@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import data from "../../public"
+import data from "../../public/Assets/Data.js"
 class Game extends Component {
 
     State = {
         data,
         Score: 0,
-        TopScore: 0
+        TopScore: 0,
+        correctness
     }
 
     componentDidMount() {
@@ -13,25 +14,26 @@ class Game extends Component {
     }
 
     // JS
+    //Give by tutor
     shuffleData = data => {
-        let i = data.length - 1;
-        while (i > 0) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = data[i];
-            data[i] = data[j];
-            data[j] = temp;
-            i--;
-        }
+        data.sort(function(a, b){return 0.5 - Math.random()});
         return data;
     };
     
+    
     handleCardClick = id => {
-        this.id.map(this.state.data)
+        let id = this.id;
+        let data = this.state.data;
+        if(data[id].clicked){
+            endGame();
+        } else{
+            this.setState(data)
+        }
     }
 
     render() {
         return (
-            <NavBar />
+            <NavBar score = {this.state.Score} topScore = {this.state.TopScore} correctness= {this.state.correctness} />
             <Jumbotron />
             <Container>
                 {this.state.data.map(item => {
